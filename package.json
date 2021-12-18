@@ -8,5 +8,9 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "argparse": "^2.0.1",
+    "cli-progress": "^3.9.1",
+    "node-fetch": "^2.6.6"
+  }
 }
