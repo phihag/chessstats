@@ -1,0 +1,26 @@
+<!doctype html>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="chessstats.css" />
+	<title>chess stats</title>
+</head>
+<body>
+<h1>chess stats</h1>
+<form id="pgn_form">
+<div><input type="file" name="pgn_file" accept=".pgn" multiple>PGN files of all your games</input></div>
+
+<progress id="pgn_progress" value="0"></progress>
+
+</form>
+
+<div id="output" style="margin-top: 20px;">
+OUTPUT GOES HERE
+</div>
+
+<script src="chess.js"></script>
+<script src="chessstats.js"></script>
+</body>
+</html>
