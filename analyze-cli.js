@@ -210,14 +210,18 @@ async function main() {
 	// Analyze
 	const stats = {
 		twoBishops: 0,
+		endedBeforeMove11: 0,
 	};
 	const chess = new Chess();
 	for (const pgn of pgns) {
 		const players = parsePlayers(pgn);
 		loadPgn(chess, pgn);
 		const white = players[0] === playerName;
+
 		const pieceCount = countPieces(chess, white ? 'w': 'b');
 		if (pieceCount.b === 2) stats.twoBishops++;
+
+		if (chess.history().length < 11) stats.endedBeforeMove11++;
 	}
 
 	if (args.short) {
@@ -226,6 +230,9 @@ async function main() {
 		console.log(
 			`Two bishops on the board at the end in ${stats.twoBishops}` +
 			` (${percent(stats.twoBishops, pgns.length)}) games`);
+		console.log(
+			`Ended before move 11: ${stats.endedBeforeMove11}` +
+			` (${percent(stats.endedBeforeMove11, pgns.length)}) games`);
 	}
 }
 
