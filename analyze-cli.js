@@ -81,15 +81,16 @@ function guessPlayer(pgns) {
 	throw new Error('Could not determine player');
 }
 
-function countPieces(chess, pgn, playerColor) {
+function loadPgn(chess, pgn) {
 	let corePgnIndex = pgn.search(/\r?\n\s*?\r?\n/);
 	if (corePgnIndex < 0) corePgnIndex = 0;
 	const corePgn = pgn.substring(corePgnIndex).trim();
 
 	const r = chess.load_pgn(corePgn, {});
-	if (!r) {
-		throw new Error(`Failed to load PGN ${JSON.stringify(pgn)}`);
-	}
+	assert(r, () => `Failed to load PGN ${JSON.stringify(pgn)}`);
+}
+
+function countPieces(chess, playerColor) {
 	const fen = chess.fen();
 	const fenPosition = fen.split(' ')[0];
 	const res = {k: 0, q:0, r: 0, b: 0, n: 0, p: 0};
@@ -213,8 +214,9 @@ async function main() {
 	const chess = new Chess();
 	for (const pgn of pgns) {
 		const players = parsePlayers(pgn);
+		loadPgn(chess, pgn);
 		const white = players[0] === playerName;
-		const pieceCount = countPieces(chess, pgn, white ? 'w': 'b');
+		const pieceCount = countPieces(chess, white ? 'w': 'b');
 		if (pieceCount.b === 2) stats.twoBishops++;
 	}
 

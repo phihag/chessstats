@@ -50,13 +50,16 @@ function parsePlayers(pgn) {
 	return [white_m[1], black_m[1]];
 }
 
-function countPieces(chess, pgn, playerColor) {
+function loadPgn(chess, pgn) {
 	let corePgnIndex = pgn.search(/\r?\n\s*?\r?\n/);
 	if (corePgnIndex < 0) corePgnIndex = 0;
 	const corePgn = pgn.substring(corePgnIndex).trim();
 
 	const r = chess.load_pgn(corePgn, {});
 	assert(r, () => `Failed to load PGN ${JSON.stringify(pgn)}`);
+}
+
+function countPieces(chess, playerColor) {
 	const fen = chess.fen();
 	const fenPosition = fen.split(' ')[0];
 	const res = {k: 0, q:0, r: 0, b: 0, n: 0, p: 0};
@@ -135,7 +138,8 @@ async function analyze(e) {
 	for (const pgn of allPGNs) {
 		const players = parsePlayers(pgn);
 		const white = players[0] === playerName;
-		const pieceCount = countPieces(chess, pgn, white ? 'w': 'b');
+		loadPgn(chess, pgn);
+		const pieceCount = countPieces(chess, white ? 'w': 'b');
 		if (pieceCount.b === 2) stats.twoBishops++;
 
 		progress.value += 1;
