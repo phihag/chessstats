@@ -47,7 +47,7 @@ async function getPgn(args, entryString) {
 		pgnHeaders.White = args.opponent_name;
 		pgnHeaders.Black = args.hero_name;
 	}
-	pgnHeaders.Description = url;
+	pgnHeaders.Event = url;
 	const pgn = decodePgn(pgnHeaders, data.game.moveList);
 	return pgn;
 }
@@ -60,7 +60,7 @@ async function main() {
 
 	const pgns = await Promise.all(ENTRIES.map(entry => getPgn(args, entry)));
 	shuffleArray(pgns);
-	console.log(pgns.join('\n'));
+	console.log(pgns.join('\n\n\n'));
 }
 
 
