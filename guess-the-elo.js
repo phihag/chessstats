@@ -54,7 +54,7 @@ async function getPgn(args, entryString) {
 
 async function main() {
 	const parser = new argparse.ArgumentParser({description: 'Write PGN for Guess the Elo'});
-	parser.add_argument('--opponent-name', {default: 'Opponent name'});
+	parser.add_argument('--opponent-name', {default: 'Opponent'});
 	parser.add_argument('--hero-name', {default: 'KDLearns Discord member'});
 	const args = parser.parse_args();
 
